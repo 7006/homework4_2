@@ -20,7 +20,14 @@ jobs:
           version-file: .github/workflows/.tool-versions
 
       - name: Syntax check of json documents used to test the json decoder
-        run: make syntax-check-json-documents
+        #run: make syntax-check-json-documents
+        run: |
+          for FILE in $(ls test/json_documents/*.json | sort)
+          do
+            echo syntax check json document $FILE
+            echo
+            jq . $FILE
+          done
 
       - name: Check code style
         run: rebar3 fmt --check
