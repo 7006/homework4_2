@@ -21,12 +21,12 @@ jobs:
 
       - name: Syntax check of json documents used to test the json decoder
         run: |
-          set -e
-          for FILE in $(ls test/json_documents/*.json | sort)
+          set -e;
+          for FILE in $(ls test/json_documents/*.json | sort);
           do
-              echo syntax check json document $FILE
-              echo 
-              jq . $FILE
+              echo syntax check json document $FILE;
+              echo ;
+              jq . $FILE;
           end
 
       - name: Check code style
