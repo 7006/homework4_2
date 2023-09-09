@@ -25,7 +25,7 @@ decode_test_() ->
             ?_assertEqual(925, lesson3_task4:decode(<<"925">>, proplists))
         },
         {
-            "number integer negative",
+            "number negative integer",
             ?_assertEqual(-541, lesson3_task4:decode(<<"-541">>, proplists))
         },
         {
@@ -33,7 +33,7 @@ decode_test_() ->
             ?_assertEqual(12.58, lesson3_task4:decode(<<"12.58">>, proplists))
         },
         {
-            "number float negative",
+            "number negative float",
             ?_assertEqual(-1.23, lesson3_task4:decode(<<"-1.23">>, proplists))
         },
         {
@@ -41,7 +41,7 @@ decode_test_() ->
             ?_assertEqual(0.63, lesson3_task4:decode(<<"0.63">>, proplists))
         },
         {
-            "number fraction negative",
+            "number negative fraction",
             ?_assertEqual(-0.82, lesson3_task4:decode(<<"-0.82">>, proplists))
         },
         {
@@ -128,7 +128,7 @@ decode_test_() ->
             )
         },
         {
-            "array nested_object",
+            "array nested object",
             ?_assertEqual(
                 [
                     [
@@ -157,7 +157,7 @@ decode_test_() ->
             )
         },
         {
-            "object single key value pair",
+            "object 1 pair",
             ?_assertEqual(
                 [
                     {<<"enabled">>, true}
@@ -169,7 +169,7 @@ decode_test_() ->
             )
         },
         {
-            "object 2 key value pairs",
+            "object 2 pairs",
             ?_assertEqual(
                 [
                     {<<"enabled">>, false},
@@ -182,7 +182,7 @@ decode_test_() ->
             )
         },
         {
-            "object mixed key value pairs",
+            "object many pairs",
             ?_assertEqual(
                 [
                     {<<"available">>, true},
@@ -199,7 +199,7 @@ decode_test_() ->
             )
         },
         {
-            "object array key value pairs",
+            "object array pairs",
             ?_assertEqual(
                 [
                     {<<"task_id">>, 4758},
@@ -213,7 +213,7 @@ decode_test_() ->
             )
         },
         {
-            "object nested object key value pairs",
+            "object nested object pairs",
             ?_assertEqual(
                 [
                     {<<"a">>, 1},
@@ -288,7 +288,7 @@ decode_test_() ->
             )
         },
         {
-            "array nested_object <map>",
+            "array nested object (map)",
             ?_assertEqual(
                 [
                     #{
@@ -307,7 +307,7 @@ decode_test_() ->
             )
         },
         {
-            "array nested_object <map>",
+            "array empty object (map)",
             ?_assertEqual(
                 #{},
                 lesson3_task4:decode(
@@ -317,7 +317,7 @@ decode_test_() ->
             )
         },
         {
-            "object single key value pair (map)",
+            "object 1 pair (map)",
             ?_assertEqual(
                 #{
                     <<"enabled">> => true
@@ -329,7 +329,7 @@ decode_test_() ->
             )
         },
         {
-            "object 2 key value pairs (map)",
+            "object 2 pairs (map)",
             ?_assertEqual(
                 #{
                     <<"enabled">> => false,
@@ -342,7 +342,7 @@ decode_test_() ->
             )
         },
         {
-            "object mixed key value pairs (map)",
+            "object many pairs (map)",
             ?_assertEqual(
                 #{
                     <<"available">> => true,
@@ -359,7 +359,7 @@ decode_test_() ->
             )
         },
         {
-            "object array key value pairs (map)",
+            "object array pairs (map)",
             ?_assertEqual(
                 #{
                     <<"task_id">> => 4758,
@@ -373,7 +373,7 @@ decode_test_() ->
             )
         },
         {
-            "object nested object key value pairs",
+            "object nested object pairs (map)",
             ?_assertEqual(
                 #{
                     <<"a">> => 1,
@@ -398,7 +398,7 @@ decode_test_() ->
             )
         },
         {
-            "squad",
+            "squad (map)",
             ?_assertEqual(
                 #{
                     <<"squadName">> => <<"Super hero squad">>,
