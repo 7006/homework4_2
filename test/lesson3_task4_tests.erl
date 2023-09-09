@@ -6,102 +6,222 @@ decode_test_() ->
     [
         {
             "null",
-            ?_assertEqual(null, lesson3_task4:decode(<<"null">>, proplists))
+            ?_assertEqual(
+                null,
+                lesson3_task4:decode(
+                    <<"null">>,
+                    proplists
+                )
+            )
         },
         {
             "true",
-            ?_assertEqual(true, lesson3_task4:decode(<<"true">>, proplists))
+            ?_assertEqual(
+                true,
+                lesson3_task4:decode(
+                    <<"true">>,
+                    proplists
+                )
+            )
         },
         {
             "false",
-            ?_assertEqual(false, lesson3_task4:decode(<<"false">>, proplists))
+            ?_assertEqual(
+                false,
+                lesson3_task4:decode(
+                    <<"false">>,
+                    proplists
+                )
+            )
         },
         {
             "number zero",
-            ?_assertEqual(0, lesson3_task4:decode(<<"0">>, proplists))
+            ?_assertEqual(
+                0,
+                lesson3_task4:decode(
+                    <<"0">>,
+                    proplists
+                )
+            )
         },
         {
             "number integer",
-            ?_assertEqual(925, lesson3_task4:decode(<<"925">>, proplists))
+            ?_assertEqual(
+                925,
+                lesson3_task4:decode(
+                    <<"925">>,
+                    proplists
+                )
+            )
         },
         {
             "number negative integer",
-            ?_assertEqual(-541, lesson3_task4:decode(<<"-541">>, proplists))
+            ?_assertEqual(
+                -541,
+                lesson3_task4:decode(
+                    <<"-541">>,
+                    proplists
+                )
+            )
         },
         {
             "number float",
-            ?_assertEqual(12.58, lesson3_task4:decode(<<"12.58">>, proplists))
+            ?_assertEqual(
+                12.58,
+                lesson3_task4:decode(
+                    <<"12.58">>,
+                    proplists
+                )
+            )
         },
         {
             "number negative float",
-            ?_assertEqual(-1.23, lesson3_task4:decode(<<"-1.23">>, proplists))
+            ?_assertEqual(
+                -1.23,
+                lesson3_task4:decode(
+                    <<"-1.23">>,
+                    proplists
+                )
+            )
         },
         {
             "number fraction",
-            ?_assertEqual(0.63, lesson3_task4:decode(<<"0.63">>, proplists))
+            ?_assertEqual(
+                0.63,
+                lesson3_task4:decode(
+                    <<"0.63">>,
+                    proplists
+                )
+            )
         },
         {
             "number negative fraction",
-            ?_assertEqual(-0.82, lesson3_task4:decode(<<"-0.82">>, proplists))
+            ?_assertEqual(
+                -0.82,
+                lesson3_task4:decode(
+                    <<"-0.82">>,
+                    proplists
+                )
+            )
         },
         {
             "string empty",
-            ?_assertEqual(<<>>, lesson3_task4:decode(<<"''">>, proplists))
+            ?_assertEqual(
+                <<>>,
+                lesson3_task4:decode(
+                    <<"''">>,
+                    proplists
+                )
+            )
         },
         {
             "string lower",
-            ?_assertEqual(<<"foobar">>, lesson3_task4:decode(<<"'foobar'">>, proplists))
+            ?_assertEqual(
+                <<"foobar">>,
+                lesson3_task4:decode(
+                    <<"'foobar'">>,
+                    proplists
+                )
+            )
         },
         {
             "string upper",
-            ?_assertEqual(<<"BARBAZ">>, lesson3_task4:decode(<<"'BARBAZ'">>, proplists))
+            ?_assertEqual(
+                <<"BARBAZ">>,
+                lesson3_task4:decode(
+                    <<"'BARBAZ'">>,
+                    proplists
+                )
+            )
         },
         {
             "string digits",
-            ?_assertEqual(<<"444">>, lesson3_task4:decode(<<"'444'">>, proplists))
+            ?_assertEqual(
+                <<"444">>,
+                lesson3_task4:decode(
+                    <<"'444'">>,
+                    proplists
+                )
+            )
         },
         {
             "string mixed",
-            ?_assertEqual(<<"4aBc9">>, lesson3_task4:decode(<<"'4aBc9'">>, proplists))
+            ?_assertEqual(
+                <<"4aBc9">>,
+                lesson3_task4:decode(
+                    <<"'4aBc9'">>,
+                    proplists
+                )
+            )
         },
         {
             "string utf8",
-            ?_assertEqual(<<"південь"/utf8>>, lesson3_task4:decode(<<"'південь'"/utf8>>, proplists))
+            ?_assertEqual(
+                <<"південь"/utf8>>,
+                lesson3_task4:decode(
+                    <<"'південь'"/utf8>>,
+                    proplists
+                )
+            )
         },
         {
             "skip whitespace",
-            ?_assertEqual(1, lesson3_task4:decode(<<"       1">>, proplists))
+            ?_assertEqual(
+                1,
+                lesson3_task4:decode(
+                    <<"       1">>,
+                    proplists
+                )
+            )
         },
         {
             "array empty",
-            ?_assertEqual([], lesson3_task4:decode(<<"[]">>, proplists))
+            ?_assertEqual(
+                [],
+                lesson3_task4:decode(
+                    <<"[]">>,
+                    proplists
+                )
+            )
         },
         {
             "array booleans",
             ?_assertEqual(
                 [true, false, true],
-                lesson3_task4:decode(<<"[true, false, true]">>, proplists)
+                lesson3_task4:decode(
+                    <<"[true, false, true]">>,
+                    proplists
+                )
             )
         },
         {
             "array null",
             ?_assertEqual(
                 [null, null, null],
-                lesson3_task4:decode(<<"[null, null, null]">>, proplists)
+                lesson3_task4:decode(
+                    <<"[null, null, null]">>,
+                    proplists
+                )
             )
         },
         {
             "array numbers",
             ?_assertEqual(
                 [999, -20, 5.36, -108.99, 0, 0.81, -0.256],
-                lesson3_task4:decode(<<"[999, -20, 5.36, -108.99, 0, 0.81, -0.256]">>, proplists)
+                lesson3_task4:decode(
+                    <<"[999, -20, 5.36, -108.99, 0, 0.81, -0.256]">>,
+                    proplists
+                )
             )
         },
         {
             "array strings",
             ?_assertEqual(
                 [<<"abc">>, <<"DEF">>, <<"hIjK">>, <<"">>, <<"1111">>],
-                lesson3_task4:decode(<<"['abc', 'DEF', 'hIjK', '', '1111']">>, proplists)
+                lesson3_task4:decode(
+                    <<"['abc', 'DEF', 'hIjK', '', '1111']">>,
+                    proplists
+                )
             )
         },
         {
@@ -109,7 +229,8 @@ decode_test_() ->
             ?_assertEqual(
                 [1, <<"foobar">>, <<"QuuX">>, 0.38, 0, false, true, null, -22, -0.5],
                 lesson3_task4:decode(
-                    <<"[1, 'foobar', 'QuuX', 0.38, 0, false, true, null, -22, -0.5]">>, proplists
+                    <<"[1, 'foobar', 'QuuX', 0.38, 0, false, true, null, -22, -0.5]">>,
+                    proplists
                 )
             )
         },
@@ -117,14 +238,20 @@ decode_test_() ->
             "array nested",
             ?_assertEqual(
                 [<<"foobar">>, [true, false], [null], 88],
-                lesson3_task4:decode(<<"['foobar', [true, false], [null], 88]">>, proplists)
+                lesson3_task4:decode(
+                    <<"['foobar', [true, false], [null], 88]">>,
+                    proplists
+                )
             )
         },
         {
             "array nested empty",
             ?_assertEqual(
                 [[], [[]], [[[]]], [[[[]]]]],
-                lesson3_task4:decode(<<"[[], [[]], [[[]]], [[[[]]]]]">>, proplists)
+                lesson3_task4:decode(
+                    <<"[[], [[]], [[[]]], [[[[]]]]]">>,
+                    proplists
+                )
             )
         },
         {
