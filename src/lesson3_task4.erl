@@ -119,7 +119,7 @@ get_token(Text) ->
             {value, false, RestText};
         <<"null", RestText/binary>> ->
             {value, null, RestText};
-        <<$", RestText/binary>> ->
+        <<$', RestText/binary>> ->
             get_string_token(RestText);
         <<C, _/binary>> when C =:= $-; ?is_digit(C) ->
             get_number_token(Text)
@@ -133,7 +133,7 @@ get_string_token(Text) ->
 
 get_string_token(Text, Chars) ->
     case Text of
-        <<$", RestText/binary>> ->
+        <<$', RestText/binary>> ->
             {value, Chars, RestText};
         <<Char/utf8, RestText/binary>> ->
             get_string_token(RestText, <<Chars/binary, Char/utf8>>)

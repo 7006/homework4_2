@@ -4,270 +4,447 @@
 
 decode_test_() ->
     [
-        t(proplists, "null", null),
-        t(proplists, "boolean true", true),
-        t(proplists, "boolean false", false),
-        t(proplists, "number zero", 0),
-        t(proplists, "number integer", 925),
-        t(proplists, "number integer negative", -541),
-        t(proplists, "number float", 12.58),
-        t(proplists, "number float negative", -1.23),
-        t(proplists, "number fraction", 0.63),
-        t(proplists, "number fraction negative", -0.82),
-        t(proplists, "string empty", <<"">>),
-        t(proplists, "string lower", <<"foobar">>),
-        t(proplists, "string upper", <<"BARBAZ">>),
-        t(proplists, "string digits", <<"444">>),
-        t(proplists, "string mixed", <<"4aBc9">>),
-        t(proplists, "string utf8", <<"південь"/utf8>>),
-        t(proplists, "whitespace", <<"skip whitespace characters">>),
-        t(proplists, "array empty", []),
-        t(proplists, "array booleans", [true, false, true]),
-        t(proplists, "array null", [null, null, null]),
-        t(proplists, "array numbers", [999, -20, 5.36, -108.99, 0, 0.81, -0.256]),
-        t(proplists, "array strings", [<<"abc">>, <<"DEF">>, <<"hIjK">>, <<"">>, <<"1111">>]),
-        t(proplists, "array mixed", [
-            1, <<"foobar">>, <<"QuuX">>, 0.38, 0, false, true, null, -22, -0.5
-        ]),
-        t(proplists, "array nested", [<<"foobar">>, [true, false], [null], 88]),
-        t(proplists, "array nested empty", [[], [[]], [[[]]], [[[[]]]]]),
-        t(proplists, "array_nested_object", [
-            [
-                {<<"a">>, 1},
-                {<<"b">>, 2}
-            ],
-            [
-                {<<"x">>, <<"xxxx">>},
-                {<<"y">>, <<"yyy">>}
-            ]
-        ]),
-        t(proplists, "object empty", []),
-        t(proplists, "object pair single", [
-            {<<"enabled">>, true}
-        ]),
-        t(proplists, "object pairs two", [
-            {<<"enabled">>, false},
-            {<<"is_new">>, true}
-        ]),
-        t(proplists, "object pairs mixed", [
-            {<<"available">>, true},
-            {<<"model">>, <<"T-1000">>},
-            {<<"parts">>, null},
-            {<<"release_year">>, 1994},
-            {<<"price">>, 10.27},
-            {<<"rating">>, 0.8}
-        ]),
-        t(proplists, "object pairs array", [
-            {<<"task_id">>, 4758},
-            {<<"subtask_ids">>, [1084, 1102, 1103]},
-            {<<"affected_releases">>, [<<"BGT/12">>, <<"LAG/2">>]}
-        ]),
-        t(proplists, "object pairs nested object", [
-            {<<"a">>, 1},
-            {<<"b">>, [
-                {<<"aa">>, true},
-                {<<"bb">>, [
-                    {<<"aaa">>, 4.23},
-                    {<<"bbb">>, [
-                        {<<"aaaa">>, <<"cccc">>},
-                        {<<"bbbb">>, [
-                            {<<"aaaaa">>, []},
-                            {<<"bbbbb">>, []}
+        {
+            "null",
+            ?_assertEqual(null, lesson3_task4:decode(<<"null">>, proplists))
+        },
+        {
+            "true",
+            ?_assertEqual(true, lesson3_task4:decode(<<"true">>, proplists))
+        },
+        {
+            "false",
+            ?_assertEqual(false, lesson3_task4:decode(<<"false">>, proplists))
+        },
+        {
+            "number zero",
+            ?_assertEqual(0, lesson3_task4:decode(<<"0">>, proplists))
+        },
+        {
+            "number integer",
+            ?_assertEqual(925, lesson3_task4:decode(<<"925">>, proplists))
+        },
+        {
+            "number integer negative",
+            ?_assertEqual(-541, lesson3_task4:decode(<<"-541">>, proplists))
+        },
+        {
+            "number float",
+            ?_assertEqual(12.58, lesson3_task4:decode(<<"12.58">>, proplists))
+        },
+        {
+            "number float negative",
+            ?_assertEqual(-1.23, lesson3_task4:decode(<<"-1.23">>, proplists))
+        },
+        {
+            "number fraction",
+            ?_assertEqual(0.63, lesson3_task4:decode(<<"0.63">>, proplists))
+        },
+        {
+            "number fraction negative",
+            ?_assertEqual(-0.82, lesson3_task4:decode(<<"-0.82">>, proplists))
+        },
+        {
+            "string empty",
+            ?_assertEqual(<<>>, lesson3_task4:decode(<<"''">>, proplists))
+        },
+        {
+            "string lower",
+            ?_assertEqual(<<"foobar">>, lesson3_task4:decode(<<"'foobar'">>, proplists))
+        },
+        {
+            "string upper",
+            ?_assertEqual(<<"BARBAZ">>, lesson3_task4:decode(<<"'BARBAZ'">>, proplists))
+        },
+        {
+            "string digits",
+            ?_assertEqual(<<"444">>, lesson3_task4:decode(<<"'444'">>, proplists))
+        },
+        {
+            "string mixed",
+            ?_assertEqual(<<"4aBc9">>, lesson3_task4:decode(<<"'4aBc9'">>, proplists))
+        },
+        {
+            "string utf8",
+            ?_assertEqual(<<"південь"/utf8>>, lesson3_task4:decode(<<"'південь'"/utf8>>, proplists))
+        },
+        {
+            "skip whitespace",
+            ?_assertEqual(1, lesson3_task4:decode(<<"       1">>, proplists))
+        },
+        {
+            "array empty",
+            ?_assertEqual([], lesson3_task4:decode(<<"[]">>, proplists))
+        },
+        {
+            "array booleans",
+            ?_assertEqual(
+                [true, false, true],
+                lesson3_task4:decode(<<"[true, false, true]">>, proplists)
+            )
+        },
+        {
+            "array null",
+            ?_assertEqual(
+                [null, null, null],
+                lesson3_task4:decode(<<"[null, null, null]">>, proplists)
+            )
+        },
+        {
+            "array numbers",
+            ?_assertEqual(
+                [999, -20, 5.36, -108.99, 0, 0.81, -0.256],
+                lesson3_task4:decode(<<"[999, -20, 5.36, -108.99, 0, 0.81, -0.256]">>, proplists)
+            )
+        },
+        {
+            "array strings",
+            ?_assertEqual(
+                [<<"abc">>, <<"DEF">>, <<"hIjK">>, <<"">>, <<"1111">>],
+                lesson3_task4:decode(<<"['abc', 'DEF', 'hIjK', '', '1111']">>, proplists)
+            )
+        },
+        {
+            "array mixed",
+            ?_assertEqual(
+                [1, <<"foobar">>, <<"QuuX">>, 0.38, 0, false, true, null, -22, -0.5],
+                lesson3_task4:decode(
+                    <<"[1, 'foobar', 'QuuX', 0.38, 0, false, true, null, -22, -0.5]">>, proplists
+                )
+            )
+        },
+        {
+            "array nested",
+            ?_assertEqual(
+                [<<"foobar">>, [true, false], [null], 88],
+                lesson3_task4:decode(<<"['foobar', [true, false], [null], 88]">>, proplists)
+            )
+        },
+        {
+            "array nested empty",
+            ?_assertEqual(
+                [[], [[]], [[[]]], [[[[]]]]],
+                lesson3_task4:decode(<<"[[], [[]], [[[]]], [[[[]]]]]">>, proplists)
+            )
+        },
+        {
+            "array nested_object",
+            ?_assertEqual(
+                [
+                    [
+                        {<<"a">>, 1},
+                        {<<"b">>, 2}
+                    ],
+                    [
+                        {<<"x">>, <<"xxxx">>},
+                        {<<"y">>, <<"yyy">>}
+                    ]
+                ],
+                lesson3_task4:decode(
+                    <<"[ {'a': 1, 'b': 2}, {'x': 'xxxx', 'y': 'yyy'} ]">>,
+                    proplists
+                )
+            )
+        },
+        {
+            "object empty",
+            ?_assertEqual(
+                [],
+                lesson3_task4:decode(
+                    <<"{}">>,
+                    proplists
+                )
+            )
+        },
+        {
+            "object single key value pair",
+            ?_assertEqual(
+                [
+                    {<<"enabled">>, true}
+                ],
+                lesson3_task4:decode(
+                    <<"{'enabled': true}">>,
+                    proplists
+                )
+            )
+        },
+        {
+            "object 2 key value pairs",
+            ?_assertEqual(
+                [
+                    {<<"enabled">>, false},
+                    {<<"is_new">>, true}
+                ],
+                lesson3_task4:decode(
+                    <<"{'enabled': false, 'is_new': true}">>,
+                    proplists
+                )
+            )
+        },
+        {
+            "object mixed key value pairs",
+            ?_assertEqual(
+                [
+                    {<<"available">>, true},
+                    {<<"model">>, <<"T-1000">>},
+                    {<<"parts">>, null},
+                    {<<"release_year">>, 1994},
+                    {<<"price">>, 10.27},
+                    {<<"rating">>, 0.8}
+                ],
+                lesson3_task4:decode(
+                    <<"{'available': true, 'model': 'T-1000', 'parts': null, 'release_year': 1994, 'price': 10.27, 'rating': 0.8}">>,
+                    proplists
+                )
+            )
+        },
+        {
+            "object array key value pairs",
+            ?_assertEqual(
+                [
+                    {<<"task_id">>, 4758},
+                    {<<"subtask_ids">>, [1084, 1102, 1103]},
+                    {<<"affected_releases">>, [<<"BGT/12">>, <<"LAG/2">>]}
+                ],
+                lesson3_task4:decode(
+                    <<"{'task_id': 4758, 'subtask_ids': [1084, 1102, 1103], 'affected_releases': ['BGT/12', 'LAG/2']}">>,
+                    proplists
+                )
+            )
+        },
+        {
+            "object nested object key value pairs",
+            ?_assertEqual(
+                [
+                    {<<"a">>, 1},
+                    {<<"b">>, [
+                        {<<"aa">>, true},
+                        {<<"bb">>, [
+                            {<<"aaa">>, 4.23},
+                            {<<"bbb">>, [
+                                {<<"aaaa">>, <<"cccc">>},
+                                {<<"bbbb">>, [
+                                    {<<"aaaaa">>, []},
+                                    {<<"bbbbb">>, []}
+                                ]}
+                            ]}
                         ]}
                     ]}
-                ]}
-            ]}
-        ]),
-        t(proplists, "squad", [
-            {<<"squadName">>, <<"Super hero squad">>},
-            {<<"homeTown">>, <<"Metro City">>},
-            {<<"formed">>, 2016},
-            {<<"secretBase">>, <<"Super tower">>},
-            {<<"active">>, true},
-            {<<"members">>, [
+                ],
+                lesson3_task4:decode(
+                    <<"{'a': 1, 'b': {'aa': true, 'bb': {'aaa': 4.23, 'bbb': {'aaaa': 'cccc', 'bbbb': {'aaaaa': [], 'bbbbb': {} }}}}}">>,
+                    proplists
+                )
+            )
+        },
+        {
+            "squad",
+            ?_assertEqual(
                 [
-                    {<<"name">>, <<"Molecule Man">>},
-                    {<<"age">>, 29},
-                    {<<"secretIdentity">>, <<"Dan Jukes">>},
-                    {<<"powers">>, [
-                        <<"Radiation resistance">>,
-                        <<"Turning tiny">>,
-                        <<"Radiation blast">>
+                    {<<"squadName">>, <<"Super hero squad">>},
+                    {<<"homeTown">>, <<"Metro City">>},
+                    {<<"formed">>, 2016},
+                    {<<"secretBase">>, <<"Super tower">>},
+                    {<<"active">>, true},
+                    {<<"members">>, [
+                        [
+                            {<<"name">>, <<"Molecule Man">>},
+                            {<<"age">>, 29},
+                            {<<"secretIdentity">>, <<"Dan Jukes">>},
+                            {<<"powers">>, [
+                                <<"Radiation resistance">>,
+                                <<"Turning tiny">>,
+                                <<"Radiation blast">>
+                            ]}
+                        ],
+                        [
+                            {<<"name">>, <<"Madame Uppercut">>},
+                            {<<"age">>, 39},
+                            {<<"secretIdentity">>, <<"Jane Wilson">>},
+                            {<<"powers">>, [
+                                <<"Million tonne punch">>,
+                                <<"Damage resistance">>,
+                                <<"Superhuman reflexes">>
+                            ]}
+                        ],
+                        [
+                            {<<"name">>, <<"Eternal Flame">>},
+                            {<<"age">>, 1000000},
+                            {<<"secretIdentity">>, <<"Unknown">>},
+                            {<<"powers">>, [
+                                <<"Immortality">>,
+                                <<"Heat Immunity">>,
+                                <<"Inferno">>,
+                                <<"Teleportation">>,
+                                <<"Interdimensional travel">>
+                            ]}
+                        ]
                     ]}
                 ],
+                lesson3_task4:decode(
+                    <<"{'squadName': 'Super hero squad', 'homeTown': 'Metro City', 'formed': 2016, 'secretBase': 'Super tower', 'active': true,  'members': [{'name': 'Molecule Man', 'age': 29, 'secretIdentity': 'Dan Jukes', 'powers': ['Radiation resistance', 'Turning tiny', 'Radiation blast']}, {'name': 'Madame Uppercut', 'age': 39, 'secretIdentity': 'Jane Wilson', 'powers': ['Million tonne punch', 'Damage resistance', 'Superhuman reflexes']},{'name': 'Eternal Flame', 'age': 1000000, 'secretIdentity': 'Unknown', 'powers': ['Immortality', 'Heat Immunity', 'Inferno', 'Teleportation', 'Interdimensional travel']}]}">>,
+                    proplists
+                )
+            )
+        },
+        {
+            "array nested_object <map>",
+            ?_assertEqual(
                 [
-                    {<<"name">>, <<"Madame Uppercut">>},
-                    {<<"age">>, 39},
-                    {<<"secretIdentity">>, <<"Jane Wilson">>},
-                    {<<"powers">>, [
-                        <<"Million tonne punch">>,
-                        <<"Damage resistance">>,
-                        <<"Superhuman reflexes">>
-                    ]}
+                    #{
+                        <<"a">> => 1,
+                        <<"b">> => 2
+                    },
+                    #{
+                        <<"x">> => <<"xxxx">>,
+                        <<"y">> => <<"yyy">>
+                    }
                 ],
-                [
-                    {<<"name">>, <<"Eternal Flame">>},
-                    {<<"age">>, 1000000},
-                    {<<"secretIdentity">>, <<"Unknown">>},
-                    {<<"powers">>, [
-                        <<"Immortality">>,
-                        <<"Heat Immunity">>,
-                        <<"Inferno">>,
-                        <<"Teleportation">>,
-                        <<"Interdimensional travel">>
-                    ]}
-                ]
-            ]}
-        ]),
-        t(map, "null", null),
-        t(map, "boolean true", true),
-        t(map, "boolean false", false),
-        t(map, "number zero", 0),
-        t(map, "number integer", 925),
-        t(map, "number integer negative", -541),
-        t(map, "number float", 12.58),
-        t(map, "number float negative", -1.23),
-        t(map, "number fraction", 0.63),
-        t(map, "number fraction negative", -0.82),
-        t(map, "string empty", <<"">>),
-        t(map, "string lower", <<"foobar">>),
-        t(map, "string upper", <<"BARBAZ">>),
-        t(map, "string digits", <<"444">>),
-        t(map, "string mixed", <<"4aBc9">>),
-        t(map, "string utf8", <<"південь"/utf8>>),
-        t(map, "whitespace", <<"skip whitespace characters">>),
-        t(map, "array empty", []),
-        t(map, "array booleans", [true, false, true]),
-        t(map, "array null", [null, null, null]),
-        t(map, "array numbers", [999, -20, 5.36, -108.99, 0, 0.81, -0.256]),
-        t(map, "array strings", [<<"abc">>, <<"DEF">>, <<"hIjK">>, <<"">>, <<"1111">>]),
-        t(map, "array mixed", [
-            1, <<"foobar">>, <<"QuuX">>, 0.38, 0, false, true, null, -22, -0.5
-        ]),
-        t(map, "array nested", [<<"foobar">>, [true, false], [null], 88]),
-        t(map, "array nested empty", [[], [[]], [[[]]], [[[[]]]]]),
-        t(map, "array_nested_object", [
-            #{
-                <<"a">> => 1,
-                <<"b">> => 2
-            },
-            #{
-                <<"x">> => <<"xxxx">>,
-                <<"y">> => <<"yyy">>
-            }
-        ]),
-        t(map, "object empty", #{}),
-        t(map, "object pair single", #{
-            <<"enabled">> => true
-        }),
-        t(map, "object pairs two", #{
-            <<"enabled">> => false,
-            <<"is_new">> => true
-        }),
-        t(map, "object pairs mixed", #{
-            <<"available">> => true,
-            <<"model">> => <<"T-1000">>,
-            <<"parts">> => null,
-            <<"release_year">> => 1994,
-            <<"price">> => 10.27,
-            <<"rating">> => 0.8
-        }),
-        t(map, "object pairs array", #{
-            <<"task_id">> => 4758,
-            <<"subtask_ids">> => [1084, 1102, 1103],
-            <<"affected_releases">> => [<<"BGT/12">>, <<"LAG/2">>]
-        }),
-        t(map, "object pairs nested object", #{
-            <<"a">> => 1,
-            <<"b">> => #{
-                <<"aa">> => true,
-                <<"bb">> => #{
-                    <<"aaa">> => 4.23,
-                    <<"bbb">> => #{
-                        <<"aaaa">> => <<"cccc">>,
-                        <<"bbbb">> => #{
-                            <<"aaaaa">> => [],
-                            <<"bbbbb">> => #{}
+                lesson3_task4:decode(
+                    <<"[ {'a': 1, 'b': 2}, {'x': 'xxxx', 'y': 'yyy'} ]">>,
+                    map
+                )
+            )
+        },
+        {
+            "array nested_object <map>",
+            ?_assertEqual(
+                #{},
+                lesson3_task4:decode(
+                    <<"{}">>,
+                    map
+                )
+            )
+        },
+        {
+            "object single key value pair (map)",
+            ?_assertEqual(
+                #{
+                    <<"enabled">> => true
+                },
+                lesson3_task4:decode(
+                    <<"{'enabled': true}">>,
+                    map
+                )
+            )
+        },
+        {
+            "object 2 key value pairs (map)",
+            ?_assertEqual(
+                #{
+                    <<"enabled">> => false,
+                    <<"is_new">> => true
+                },
+                lesson3_task4:decode(
+                    <<"{'enabled': false, 'is_new': true}">>,
+                    map
+                )
+            )
+        },
+        {
+            "object mixed key value pairs (map)",
+            ?_assertEqual(
+                #{
+                    <<"available">> => true,
+                    <<"model">> => <<"T-1000">>,
+                    <<"parts">> => null,
+                    <<"release_year">> => 1994,
+                    <<"price">> => 10.27,
+                    <<"rating">> => 0.8
+                },
+                lesson3_task4:decode(
+                    <<"{'available': true, 'model': 'T-1000', 'parts': null, 'release_year': 1994, 'price': 10.27, 'rating': 0.8}">>,
+                    map
+                )
+            )
+        },
+        {
+            "object array key value pairs (map)",
+            ?_assertEqual(
+                #{
+                    <<"task_id">> => 4758,
+                    <<"subtask_ids">> => [1084, 1102, 1103],
+                    <<"affected_releases">> => [<<"BGT/12">>, <<"LAG/2">>]
+                },
+                lesson3_task4:decode(
+                    <<"{'task_id': 4758, 'subtask_ids': [1084, 1102, 1103], 'affected_releases': ['BGT/12', 'LAG/2']}">>,
+                    map
+                )
+            )
+        },
+        {
+            "object nested object key value pairs",
+            ?_assertEqual(
+                #{
+                    <<"a">> => 1,
+                    <<"b">> => #{
+                        <<"aa">> => true,
+                        <<"bb">> => #{
+                            <<"aaa">> => 4.23,
+                            <<"bbb">> => #{
+                                <<"aaaa">> => <<"cccc">>,
+                                <<"bbbb">> => #{
+                                    <<"aaaaa">> => [],
+                                    <<"bbbbb">> => #{}
+                                }
+                            }
                         }
                     }
-                }
-            }
-        }),
-        t(map, "squad", #{
-            <<"squadName">> => <<"Super hero squad">>,
-            <<"homeTown">> => <<"Metro City">>,
-            <<"formed">> => 2016,
-            <<"secretBase">> => <<"Super tower">>,
-            <<"active">> => true,
-            <<"members">> => [
+                },
+                lesson3_task4:decode(
+                    <<"{'a': 1, 'b': {'aa': true, 'bb': {'aaa': 4.23, 'bbb': {'aaaa': 'cccc', 'bbbb': {'aaaaa': [], 'bbbbb': {} }}}}}">>,
+                    map
+                )
+            )
+        },
+        {
+            "squad",
+            ?_assertEqual(
                 #{
-                    <<"name">> => <<"Molecule Man">>,
-                    <<"age">> => 29,
-                    <<"secretIdentity">> => <<"Dan Jukes">>,
-                    <<"powers">> => [
-                        <<"Radiation resistance">>,
-                        <<"Turning tiny">>,
-                        <<"Radiation blast">>
+                    <<"squadName">> => <<"Super hero squad">>,
+                    <<"homeTown">> => <<"Metro City">>,
+                    <<"formed">> => 2016,
+                    <<"secretBase">> => <<"Super tower">>,
+                    <<"active">> => true,
+                    <<"members">> => [
+                        #{
+                            <<"name">> => <<"Molecule Man">>,
+                            <<"age">> => 29,
+                            <<"secretIdentity">> => <<"Dan Jukes">>,
+                            <<"powers">> => [
+                                <<"Radiation resistance">>,
+                                <<"Turning tiny">>,
+                                <<"Radiation blast">>
+                            ]
+                        },
+                        #{
+                            <<"name">> => <<"Madame Uppercut">>,
+                            <<"age">> => 39,
+                            <<"secretIdentity">> => <<"Jane Wilson">>,
+                            <<"powers">> => [
+                                <<"Million tonne punch">>,
+                                <<"Damage resistance">>,
+                                <<"Superhuman reflexes">>
+                            ]
+                        },
+                        #{
+                            <<"name">> => <<"Eternal Flame">>,
+                            <<"age">> => 1000000,
+                            <<"secretIdentity">> => <<"Unknown">>,
+                            <<"powers">> => [
+                                <<"Immortality">>,
+                                <<"Heat Immunity">>,
+                                <<"Inferno">>,
+                                <<"Teleportation">>,
+                                <<"Interdimensional travel">>
+                            ]
+                        }
                     ]
                 },
-                #{
-                    <<"name">> => <<"Madame Uppercut">>,
-                    <<"age">> => 39,
-                    <<"secretIdentity">> => <<"Jane Wilson">>,
-                    <<"powers">> => [
-                        <<"Million tonne punch">>,
-                        <<"Damage resistance">>,
-                        <<"Superhuman reflexes">>
-                    ]
-                },
-                #{
-                    <<"name">> => <<"Eternal Flame">>,
-                    <<"age">> => 1000000,
-                    <<"secretIdentity">> => <<"Unknown">>,
-                    <<"powers">> => [
-                        <<"Immortality">>,
-                        <<"Heat Immunity">>,
-                        <<"Inferno">>,
-                        <<"Teleportation">>,
-                        <<"Interdimensional travel">>
-                    ]
-                }
-            ]
-        }),
-        t_invalid(map, "number double fraction"),
-        t_invalid(map, "number double sign"),
-        t_invalid(map, "array comma"),
-        t_invalid(map, "array close bracket"),
-        t_invalid(map, "array open bracket"),
-        t_invalid(map, "array open curly bracket"),
-        t_invalid(map, "array close curly bracket"),
-        t_invalid(map, "object colon"),
-        t_invalid(map, "object colon value"),
-        t_invalid(map, "object colon key"),
-        t_invalid(map, "object colon key array"),
-        t_invalid(map, "object colon key object")
+                lesson3_task4:decode(
+                    <<"{'squadName': 'Super hero squad', 'homeTown': 'Metro City', 'formed': 2016, 'secretBase': 'Super tower', 'active': true,  'members': [{'name': 'Molecule Man', 'age': 29, 'secretIdentity': 'Dan Jukes', 'powers': ['Radiation resistance', 'Turning tiny', 'Radiation blast']}, {'name': 'Madame Uppercut', 'age': 39, 'secretIdentity': 'Jane Wilson', 'powers': ['Million tonne punch', 'Damage resistance', 'Superhuman reflexes']},{'name': 'Eternal Flame', 'age': 1000000, 'secretIdentity': 'Unknown', 'powers': ['Immortality', 'Heat Immunity', 'Inferno', 'Teleportation', 'Interdimensional travel']}]}">>,
+                    map
+                )
+            )
+        }
     ].
-
-t(ObjectHandler, Description, Expected) ->
-    Comment = string:join(["<", atom_to_list(ObjectHandler), "> ", Description], ""),
-    JsonDocument = read_json_document(Description, "test/json_documents"),
-    Test = ?_assertEqual(
-        Expected,
-        lesson3_task4:decode(JsonDocument, ObjectHandler)
-    ),
-    {Comment, Test}.
-
-t_invalid(ObjectHandler, Description) ->
-    Comment = string:join(["<", atom_to_list(ObjectHandler), "> ", Description], ""),
-    InvalidJsonDocument = read_json_document(Description, "test/json_documents/_invalid"),
-    Test = ?_assertError(
-        _,
-        lesson3_task4:decode(InvalidJsonDocument, ObjectHandler)
-    ),
-    {Comment, Test}.
-
-read_json_document(Description, Dirname) ->
-    Basename = string:join(string:replace(Description, " ", "_", all), ""),
-    Filename = string:join([Dirname, "/", Basename, ".", "json"], ""),
-    {ok, Json} = file:read_file(Filename),
-    Json.
