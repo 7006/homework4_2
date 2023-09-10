@@ -573,5 +573,27 @@ decode_test_() ->
                     map
                 )
             )
+        },
+        {
+            "whitespaces at the end of the text",
+            ?_assertEqual(
+                [{<<"a">>, <<"ccc">>}],
+                lesson3_task4:decode(
+                    <<$\n, "   {'a'", $\n, ":", $\n, "'ccc'", $\n, "     }", $\n>>,
+                    proplists
+                )
+            )
+        },
+        {
+            "whitespaces at the end of the text (map)",
+            ?_assertEqual(
+                #{
+                    <<"a">> => <<"ccc">>
+                },
+                lesson3_task4:decode(
+                    <<$\n, "   {'a'", $\n, ":", $\n, "'ccc'", $\n, "     }", $\n>>,
+                    map
+                )
+            )
         }
     ].
