@@ -10,7 +10,7 @@ decode_test_() ->
                 null,
                 lesson3_task4:decode(
                     <<"null">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -20,7 +20,7 @@ decode_test_() ->
                 true,
                 lesson3_task4:decode(
                     <<"true">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -30,7 +30,7 @@ decode_test_() ->
                 false,
                 lesson3_task4:decode(
                     <<"false">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -40,7 +40,7 @@ decode_test_() ->
                 0,
                 lesson3_task4:decode(
                     <<"0">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -50,7 +50,7 @@ decode_test_() ->
                 925,
                 lesson3_task4:decode(
                     <<"925">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -60,7 +60,7 @@ decode_test_() ->
                 -541,
                 lesson3_task4:decode(
                     <<"-541">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -70,7 +70,7 @@ decode_test_() ->
                 12.58,
                 lesson3_task4:decode(
                     <<"12.58">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -80,7 +80,7 @@ decode_test_() ->
                 -1.23,
                 lesson3_task4:decode(
                     <<"-1.23">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -90,7 +90,7 @@ decode_test_() ->
                 0.63,
                 lesson3_task4:decode(
                     <<"0.63">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -100,7 +100,7 @@ decode_test_() ->
                 -0.82,
                 lesson3_task4:decode(
                     <<"-0.82">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -110,7 +110,7 @@ decode_test_() ->
                 <<>>,
                 lesson3_task4:decode(
                     <<"''">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -120,7 +120,7 @@ decode_test_() ->
                 <<"foobar">>,
                 lesson3_task4:decode(
                     <<"'foobar'">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -130,7 +130,7 @@ decode_test_() ->
                 <<"BARBAZ">>,
                 lesson3_task4:decode(
                     <<"'BARBAZ'">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -140,7 +140,7 @@ decode_test_() ->
                 <<"444">>,
                 lesson3_task4:decode(
                     <<"'444'">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -150,7 +150,7 @@ decode_test_() ->
                 <<"4aBc9">>,
                 lesson3_task4:decode(
                     <<"'4aBc9'">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -160,7 +160,7 @@ decode_test_() ->
                 <<"південь"/utf8>>,
                 lesson3_task4:decode(
                     <<"'південь'"/utf8>>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -170,7 +170,7 @@ decode_test_() ->
                 1,
                 lesson3_task4:decode(
                     <<"       1">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -180,7 +180,7 @@ decode_test_() ->
                 [],
                 lesson3_task4:decode(
                     <<"[]">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -190,7 +190,7 @@ decode_test_() ->
                 [true, false, true],
                 lesson3_task4:decode(
                     <<"[true, false, true]">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -200,7 +200,7 @@ decode_test_() ->
                 [null, null, null],
                 lesson3_task4:decode(
                     <<"[null, null, null]">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -210,7 +210,7 @@ decode_test_() ->
                 [999, -20, 5.36, -108.99, 0, 0.81, -0.256],
                 lesson3_task4:decode(
                     <<"[999, -20, 5.36, -108.99, 0, 0.81, -0.256]">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -220,7 +220,7 @@ decode_test_() ->
                 [<<"abc">>, <<"DEF">>, <<"hIjK">>, <<"">>, <<"1111">>],
                 lesson3_task4:decode(
                     <<"['abc', 'DEF', 'hIjK', '', '1111']">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -230,7 +230,7 @@ decode_test_() ->
                 [1, <<"foobar">>, <<"QuuX">>, 0.38, 0, false, true, null, -22, -0.5],
                 lesson3_task4:decode(
                     <<"[1, 'foobar', 'QuuX', 0.38, 0, false, true, null, -22, -0.5]">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -240,7 +240,7 @@ decode_test_() ->
                 [<<"foobar">>, [true, false], [null], 88],
                 lesson3_task4:decode(
                     <<"['foobar', [true, false], [null], 88]">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -250,7 +250,7 @@ decode_test_() ->
                 [[], [[]], [[[]]], [[[[]]]]],
                 lesson3_task4:decode(
                     <<"[[], [[]], [[[]]], [[[[]]]]]">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -269,7 +269,7 @@ decode_test_() ->
                 ],
                 lesson3_task4:decode(
                     <<"[ {'a': 1, 'b': 2}, {'x': 'xxxx', 'y': 'yyy'} ]">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -279,7 +279,7 @@ decode_test_() ->
                 [],
                 lesson3_task4:decode(
                     <<"{}">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -291,7 +291,7 @@ decode_test_() ->
                 ],
                 lesson3_task4:decode(
                     <<"{'enabled': true}">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -304,7 +304,7 @@ decode_test_() ->
                 ],
                 lesson3_task4:decode(
                     <<"{'enabled': false, 'is_new': true}">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -321,7 +321,7 @@ decode_test_() ->
                 ],
                 lesson3_task4:decode(
                     <<"{'available': true, 'model': 'T-1000', 'parts': null, 'release_year': 1994, 'price': 10.27, 'rating': 0.8}">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -335,7 +335,7 @@ decode_test_() ->
                 ],
                 lesson3_task4:decode(
                     <<"{'task_id': 4758, 'subtask_ids': [1084, 1102, 1103], 'affected_releases': ['BGT/12', 'LAG/2']}">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -360,7 +360,7 @@ decode_test_() ->
                 ],
                 lesson3_task4:decode(
                     <<"{'a': 1, 'b': {'aa': true, 'bb': {'aaa': 4.23, 'bbb': {'aaaa': 'cccc', 'bbbb': {'aaaaa': [], 'bbbbb': {} }}}}}">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -410,7 +410,7 @@ decode_test_() ->
                 ],
                 lesson3_task4:decode(
                     <<"{'squadName': 'Super hero squad', 'homeTown': 'Metro City', 'formed': 2016, 'secretBase': 'Super tower', 'active': true,  'members': [{'name': 'Molecule Man', 'age': 29, 'secretIdentity': 'Dan Jukes', 'powers': ['Radiation resistance', 'Turning tiny', 'Radiation blast']}, {'name': 'Madame Uppercut', 'age': 39, 'secretIdentity': 'Jane Wilson', 'powers': ['Million tonne punch', 'Damage resistance', 'Superhuman reflexes']},{'name': 'Eternal Flame', 'age': 1000000, 'secretIdentity': 'Unknown', 'powers': ['Immortality', 'Heat Immunity', 'Inferno', 'Teleportation', 'Interdimensional travel']}]}">>,
-                    proplists
+                    proplist
                 )
             )
         },
@@ -580,7 +580,7 @@ decode_test_() ->
                 [{<<"a">>, <<"ccc">>}],
                 lesson3_task4:decode(
                     <<$\n, "   {'a'", $\n, ":", $\n, "'ccc'", $\n, "     }", $\n>>,
-                    proplists
+                    proplist
                 )
             )
         },
